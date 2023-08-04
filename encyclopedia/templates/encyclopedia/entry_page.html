@@ -6,7 +6,12 @@
 
 {% block body %}
 
+
+    {% if not_found %}
+<!-- If not_found not None renders the message -->
+        <h1>{{ not_found }}</h1>
+    {% else %}
 <!-- Using the safe filter to render the HTML code from entry variable -->
-    {{ entry | safe }}
-    
+        {{ entry | safe }}
+    {% endif %}
 {% endblock %}
