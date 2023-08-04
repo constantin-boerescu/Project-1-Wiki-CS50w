@@ -16,7 +16,9 @@ def entry_page(request, entry):
 
     # coverts the .md file format into HTML
     coverted = markdowner.convert(util.get_entry(entry))
-    print(coverted)
+
+    # passing the entry_title and converted HTML code to the entry_page and renders it
     return render(request, "encyclopedia/entry_page.html",{
+        "entry_title":entry.capitalize(),
         "entry": coverted
     })

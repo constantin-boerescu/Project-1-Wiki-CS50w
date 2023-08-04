@@ -1,12 +1,12 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    Entry_page
+    {{ entry_title }}
 {% endblock %}
 
 {% block body %}
 
 <!-- Using the safe filter to render the HTML code from entry variable -->
-    {{ entry|safe }}
+    {{ entry | safe }}
     
 {% endblock %}
