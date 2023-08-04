@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from . import util
 
-import markdown2
+from markdown2 import Markdown
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -10,8 +10,13 @@ def index(request):
     })
 
 def entry_page(request, entry):
-    title = markdown2.markdown(util.get_entry(entry))
-    print(title)
+    '''Renders a page of the encyclopedia entry'''
+
+    markdowner = Markdown()
+
+    # coverts the .md file format into HTML
+    coverted = markdowner.convert(util.get_entry(entry))
+    print(coverted)
     return render(request, "encyclopedia/entry_page.html",{
-        "entry": title
+        "entry": coverted
     })
