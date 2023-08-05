@@ -9,7 +9,8 @@
 
     <ul>
         {% for entry in entries %}
-            <li>{{ entry }}</li>
+            <!-- link for every list element -->
+            <li><a href="{% url 'encyclopedia:entry_page' entry %}">{{entry}}</a></li>
         {% endfor %}
     </ul>
 
