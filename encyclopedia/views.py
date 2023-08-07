@@ -77,3 +77,12 @@ def search_result(request):
                     "entry_title": "Not found",
                     "not_found": f"{query.capitalize()} was not found"
                 })
+        
+def create_new(request):
+    '''Let the user create a new encyclopedia entry'''
+
+    if request.method == 'GET':
+
+    # returns the create_new page
+        return render(request,  "encyclopedia/create_new.html")
+    
