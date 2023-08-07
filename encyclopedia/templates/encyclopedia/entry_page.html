@@ -13,5 +13,8 @@
     {% else %}
 <!-- Using the safe filter to render the HTML code from entry variable -->
         {{ entry | safe }}
+        <div class="edit_wrapper">
+        <a href="{% url 'encyclopedia:edit_page' entry_title %}" class="edit_btn submit_btn">Edit entry</a>
+    </div>
     {% endif %}
 {% endblock %}

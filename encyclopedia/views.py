@@ -16,6 +16,8 @@ def get_lower_entries():
     '''Gets a list of entries lowers them and returns a lowered list'''
 
     lower_entries = []
+
+    # get the entries
     entries = util.list_entries()
 
     # lowers each entries and appends them to the lower list
@@ -119,3 +121,32 @@ def create_new(request):
             return render(request, "encyclopedia/error.html",{
                 "message":"Sorry but the title or content field are empty",
             })
+
+def edit_page(request, entry_title):
+
+    if request.method == "GET":
+        # get the content of the entry
+        raw_content = util.get_entry(entry_title)
+        # get the lines of the content
+        lines = raw_content.splitlines()
+        # get rid of the firt line of the content
+        content = "\n".join(lines[1:])
+
+        return render(request,  "encyclopedia/edit_page.html",{
+            "entry_title":entry_title,
+            "content": content
+        })
+    else:
+        # TODO: modifi the text and redirect to the entry page
+
+        # gets the entry title
+        title = request.POST.get('edit_title')
+        # gets the entry content
+        raw_content = request.POST.get('edit_content')
+
+        content = f"#{title}\n" + raw_content
+        print(content)
+        util.save_entry(title, content)
+        
+        return HttpResponseRedirect(reverse("encyclopedia:index"))
+    # TODO: make a function that adds modifi and add the entries

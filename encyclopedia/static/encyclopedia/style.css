@@ -45,6 +45,8 @@ textarea {
     vertical-align: center;
     background-color: #3079ed;
     color:white;
+    
+
 }
 
 .submit_btn:hover{
@@ -53,4 +55,20 @@ textarea {
 
 .title_field{
     margin:10px 0 20px;
+}
+.edit_btn{
+    color: #f0f0f0;
+    padding: 10px 40px;
+
+}
+.edit_wrapper{
+    margin-top: 40px;
+}
+.edit_wrapper a:link{
+    text-decoration: none;
+    color: #f0f0f0;
+}
+.edit_wrapper a:hover{
+    text-decoration: none;
+    color: #f0f0f0;
 }
