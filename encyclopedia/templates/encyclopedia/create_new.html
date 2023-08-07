@@ -8,11 +8,12 @@
     <h1>Create new encyclopedia entry</h1>
 
     <form action="{% url 'encyclopedia:create_new' %}" method="post">
+        {% csrf_token %}
         <input class="title_field" type="text" name="entry_title" placeholder="Entry title">
         <br>
         <label for="create_new">Content of the entry:</label>
         <br>
-        <textarea id="txt_area" name="create_new"></textarea>
+        <textarea id="txt_area" name="entry_content"></textarea>
         <br>
         <input class="submit_btn" type="submit" value="Create entry">
     </form>

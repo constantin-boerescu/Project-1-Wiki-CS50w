@@ -12,10 +12,18 @@ import re
 
 markdowner = Markdown()
 
-# ---Testing---
-class NewSearchQuerry(forms.Form):
-    query = forms.CharField(label="Search")
+def get_lower_entries():
+    '''Gets a list of entries lowers them and returns a lowered list'''
 
+    lower_entries = []
+    entries = util.list_entries()
+
+    # lowers each entries and appends them to the lower list
+    for entry in entries:
+        lower_entries.append(entry.lower())
+
+    # returns the lowered list
+    return lower_entries
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -55,9 +63,7 @@ def search_result(request):
         entries = util.list_entries()
         
         # lower the entries
-        lowered = []
-        for entry in entries:
-            lowered.append(entry.lower())
+        lowered = get_lower_entries()
 
         # if the query is in the entries list returns the entry page
         if query.lower() in lowered:
@@ -86,3 +92,30 @@ def create_new(request):
     # returns the create_new page
         return render(request,  "encyclopedia/create_new.html")
     
+    else:
+        # gets the entry title
+        title = request.POST.get('entry_title')
+        # gets the entry content
+        raw_content = request.POST.get('entry_content')
+
+        
+        # checks if title and content field are filled
+        if title and raw_content:
+            # checks if the entry name already exists
+            if title.lower() in get_lower_entries():
+                # returns an error message
+                return render(request, "encyclopedia/error.html",{
+                    "message":"Sorry but the entry already exists",
+                })
+            
+            # if the entry does not already exists it makes an .md file
+            else:
+                content = f"#{title}\n" + raw_content
+                util.save_entry(title, content)
+            
+            return HttpResponseRedirect(reverse("encyclopedia:index"))
+        else:
+            # returns an error message
+            return render(request, "encyclopedia/error.html",{
+                "message":"Sorry but the title or content field are empty",
+            })
