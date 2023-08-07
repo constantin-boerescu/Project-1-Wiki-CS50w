@@ -17,6 +17,11 @@ textarea {
     width: 30%;
 }
 
+#txt_area{
+    height: 40vh;
+    width: 30%;
+}
+
 .main {
     padding: 10px;
 }
