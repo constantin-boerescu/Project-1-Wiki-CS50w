@@ -45,8 +45,6 @@ textarea {
     vertical-align: center;
     background-color: #3079ed;
     color:white;
-    
-
 }
 
 .submit_btn:hover{
@@ -59,7 +57,6 @@ textarea {
 .edit_btn{
     color: #f0f0f0;
     padding: 10px 40px;
-
 }
 .edit_wrapper{
     margin-top: 40px;

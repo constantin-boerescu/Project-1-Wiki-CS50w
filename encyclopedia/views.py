@@ -5,7 +5,7 @@ from . import util
 from markdown2 import Markdown
 from django.urls import reverse
 
-
+from random import randint
 from django import forms
 from django.http import HttpResponseRedirect
 import re
@@ -27,7 +27,14 @@ def get_lower_entries():
     # returns the lowered list
     return lower_entries
 
+def save_content(title, raw_content):
+    '''Get a title and raw content, and saves the entry'''
+    content = f"#{title}\n" + raw_content
+    util.save_entry(title, content)
+
 def index(request):
+    '''Renders the home page'''
+
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
@@ -112,8 +119,8 @@ def create_new(request):
             
             # if the entry does not already exists it makes an .md file
             else:
-                content = f"#{title}\n" + raw_content
-                util.save_entry(title, content)
+                # saves the content
+                save_content(title, raw_content)
             
             return HttpResponseRedirect(reverse("encyclopedia:index"))
         else:
@@ -123,6 +130,7 @@ def create_new(request):
             })
 
 def edit_page(request, entry_title):
+    '''Let the user to edit a entry content'''
 
     if request.method == "GET":
         # get the content of the entry
@@ -137,16 +145,25 @@ def edit_page(request, entry_title):
             "content": content
         })
     else:
-        # TODO: modifi the text and redirect to the entry page
 
         # gets the entry title
         title = request.POST.get('edit_title')
         # gets the entry content
         raw_content = request.POST.get('edit_content')
+        # saves the content
+        save_content(title, raw_content)
 
-        content = f"#{title}\n" + raw_content
-        print(content)
-        util.save_entry(title, content)
-        
         return HttpResponseRedirect(reverse("encyclopedia:index"))
-    # TODO: make a function that adds modifi and add the entries
+
+def random(request):
+    '''Redirect the user on a random entry page'''
+
+    #get the number of entries
+    entries = util.list_entries()
+
+    # count the entries
+    cnt_entries = len(entries)
+
+    # return sa random entry
+    rand_entry = entries[randint(0, cnt_entries - 1)]
+    return HttpResponseRedirect(reverse("encyclopedia:entry_page", args=[rand_entry]))
